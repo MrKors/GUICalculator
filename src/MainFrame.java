@@ -1,4 +1,8 @@
+import javax.print.attribute.Attribute;
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,24 +26,27 @@ public class MainFrame extends JFrame{
     private JButton button_plus;
     private JButton button_multi;
     private JButton button_div;
-    private JTextPane textPane1;
-    private JTextArea textArea;
     private JTextField textField;
+    private JTextPane textPane;
 
+    VarType varType;
     StoreData storeData = new StoreData();
     Operation operation = new Operation();
-    VarType varType;
+    SimpleAttributeSet simpleAttributeSet = new SimpleAttributeSet();
+
 
     public MainFrame() {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(panel1);
         setBounds(500,200,400,500);
+        StyleConstants.setAlignment(simpleAttributeSet, StyleConstants.ALIGN_RIGHT);
+        textPane.setParagraphAttributes(simpleAttributeSet,true);
 
         button_1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_1);
+                operation.printNumbersOrOperation(textPane, button_1);
                 operation.printNumbersOrOperation(textField, button_1);
             }
         });
@@ -47,7 +54,7 @@ public class MainFrame extends JFrame{
         button_2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_2);
+                operation.printNumbersOrOperation(textPane, button_2);
                 operation.printNumbersOrOperation(textField, button_2);
             }
         });
@@ -55,7 +62,7 @@ public class MainFrame extends JFrame{
         button_3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_3);
+                operation.printNumbersOrOperation(textPane, button_3);
                 operation.printNumbersOrOperation(textField, button_3);
             }
         });
@@ -63,7 +70,7 @@ public class MainFrame extends JFrame{
         button_4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_4);
+                operation.printNumbersOrOperation(textPane, button_4);
                 operation.printNumbersOrOperation(textField, button_4);
             }
         });
@@ -71,35 +78,35 @@ public class MainFrame extends JFrame{
         button_5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_5);
+                operation.printNumbersOrOperation(textPane, button_5);
                 operation.printNumbersOrOperation(textField, button_5);
             }
         });
         button_6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_6);
+                operation.printNumbersOrOperation(textPane, button_6);
                 operation.printNumbersOrOperation(textField, button_6);
             }
         });
         button_7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_7);
+                operation.printNumbersOrOperation(textPane, button_7);
                 operation.printNumbersOrOperation(textField, button_7);
             }
         });
         button_8.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_8);
+                operation.printNumbersOrOperation(textPane, button_8);
                 operation.printNumbersOrOperation(textField, button_8);
             }
         });
         button_9.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_9);
+                operation.printNumbersOrOperation(textPane, button_9);
                 operation.printNumbersOrOperation(textField, button_9);
             }
         });
@@ -107,7 +114,7 @@ public class MainFrame extends JFrame{
         button_0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_0);
+                operation.printNumbersOrOperation(textPane, button_0);
                 operation.printNumbersOrOperation(textField, button_0);
             }
         });
@@ -115,7 +122,7 @@ public class MainFrame extends JFrame{
         button_dot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_dot);
+                operation.printNumbersOrOperation(textPane, button_dot);
                 operation.printNumbersOrOperation(textField, button_dot);
             }
         });
@@ -123,7 +130,7 @@ public class MainFrame extends JFrame{
         button_plus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_plus);
+                operation.printNumbersOrOperation(textPane, button_plus);
                 operation.setFirstNumber(textField.getText());
                 operation.operationType = "+";
                 textField.setText("");
@@ -133,7 +140,7 @@ public class MainFrame extends JFrame{
         button_minus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_minus);
+                operation.printNumbersOrOperation(textPane, button_minus);
                 operation.setFirstNumber(textField.getText());
                 operation.operationType = "-";
                 textField.setText("");
@@ -142,7 +149,7 @@ public class MainFrame extends JFrame{
         button_multi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_multi);
+                operation.printNumbersOrOperation(textPane, button_multi);
                 operation.setFirstNumber(textField.getText());
                 operation.operationType = "*";
                 textField.setText("");
@@ -151,7 +158,7 @@ public class MainFrame extends JFrame{
         button_div.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operation.printNumbersOrOperation(textArea, button_div);
+                operation.printNumbersOrOperation(textPane, button_div);
                 operation.setFirstNumber(textField.getText());
                 operation.operationType = "/";
                 textField.setText("");
@@ -160,7 +167,7 @@ public class MainFrame extends JFrame{
         button_С.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                textArea.setText("");
+                textPane.setText("");
                 textField.setText("");
             }
         });
@@ -169,7 +176,7 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 operation.setSecondNumber(textField.getText());
                 varType = operation.doOperation();
-                operation = operation.getResult(textArea, storeData);
+                operation = operation.getResult(textPane, storeData);
                 textField.setText("");
             }
         });
