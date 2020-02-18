@@ -33,6 +33,7 @@ public class MainFrame extends JFrame{
     StoreData storeData = new StoreData();
     Operation operation = new Operation();
     SimpleAttributeSet simpleAttributeSet = new SimpleAttributeSet();
+    Font textFieldFont = new Font(null,Font.BOLD,25);
 
 
     public MainFrame() {
@@ -40,8 +41,12 @@ public class MainFrame extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(panel1);
         setBounds(500,200,400,500);
+
         StyleConstants.setAlignment(simpleAttributeSet, StyleConstants.ALIGN_RIGHT);
+        StyleConstants.setFontFamily(simpleAttributeSet, "Serif");
         textPane.setParagraphAttributes(simpleAttributeSet,true);
+
+        textField.setFont(textFieldFont);
 
         button_1.addActionListener(new ActionListener() {
             @Override
@@ -133,6 +138,7 @@ public class MainFrame extends JFrame{
                 operation.printNumbersOrOperation(textPane, button_plus);
                 operation.setFirstNumber(textField.getText());
                 operation.operationType = "+";
+//                operation.nextOperation(storeData, textField);
                 textField.setText("");
             }
         });
@@ -178,6 +184,7 @@ public class MainFrame extends JFrame{
                 varType = operation.doOperation();
                 operation = operation.getResult(textPane, storeData);
                 textField.setText("");
+//                operation.nextOperation(storeData);
             }
         });
     }

@@ -16,7 +16,9 @@ public class Operation{
     }
 
     public void setFirstNumber(String firstNumber) {
-        this.firstNumber = firstNumber;
+        if (this.firstNumber == null) {
+            this.firstNumber = firstNumber;
+        }
     }
 
     public String getSecondNumber() {
@@ -70,11 +72,34 @@ public class Operation{
         return varType;
     }
 
-    public Operation getResult (JTextComponent fieldname, StoreData storeData){
+    public Operation getResult (JTextComponent fieldName,/*JTextComponent singleResult,*/ StoreData storeData){
         storeData.setResultStore(this.toString());
-        fieldname.setText(storeData.getResultStore());
-        fieldname.setText(fieldname.getText() + "\n");
+        fieldName.setText(storeData.getResultStore());
+        fieldName.setText(fieldName.getText() + "\n");
+
+        if (typeDouble) {
+            storeData.setResultDouble(resultDouble);
+            storeData.setTypeDouble(true);
+//            singleResult.setText(String.valueOf(resultDouble));
+        } else {
+            storeData.setResultInt(resultInt);
+            storeData.setTypeDouble(false);
+//            singleResult.setText(String.valueOf(resultInt));
+        }
         return new Operation();
+    }
+
+    public void nextOperation (StoreData storeData, JTextComponent fieldName){
+        if (operationType != null) {
+            if (storeData.isTypeDouble()) {
+                setFirstNumber(String.valueOf(storeData.getResultDouble()));
+            } else {
+                setFirstNumber(String.valueOf(storeData.getResultInt()));
+            }
+        }
+        else {
+            setFirstNumber(fieldName.getText());
+        }
     }
 
     @Override
