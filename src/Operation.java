@@ -9,6 +9,7 @@ public class Operation{
     private int resultInt;
     private double resultDouble;
     private boolean typeDouble;
+    private boolean tempTrue;
 //    private boolean typeInteger;
 
     public String getFirstNumber() {
@@ -31,12 +32,11 @@ public class Operation{
 
 
     public void printNumbersOrOperation(JTextComponent fieldName, JButton buttonValue){
-        if (fieldName != null) {
-            fieldName.setText(fieldName.getText() + buttonValue.getActionCommand());
+        if (!tempTrue) {
+            fieldName.setText("");
+            tempTrue = true;
         }
-//        else if (fieldName instanceof JTextArea) {
-//            fieldName.setText(buttonValue.getActionCommand());
-//        }
+        fieldName.setText(fieldName.getText() + buttonValue.getActionCommand());
     }
 
     public VarType doOperation (){
@@ -72,34 +72,28 @@ public class Operation{
         return varType;
     }
 
-    public Operation getResult (JTextComponent fieldName,/*JTextComponent singleResult,*/ StoreData storeData){
+    public Operation getResult (JTextComponent textPane, JTextComponent textField, StoreData storeData){
         storeData.setResultStore(this.toString());
-        fieldName.setText(storeData.getResultStore());
-        fieldName.setText(fieldName.getText() + "\n");
+        textPane.setText(storeData.getResultStore());
+        textPane.setText(textPane.getText() + "\n");
 
         if (typeDouble) {
             storeData.setResultDouble(resultDouble);
             storeData.setTypeDouble(true);
-//            singleResult.setText(String.valueOf(resultDouble));
+            textField.setText(String.valueOf(resultDouble));
         } else {
             storeData.setResultInt(resultInt);
             storeData.setTypeDouble(false);
-//            singleResult.setText(String.valueOf(resultInt));
+            textField.setText(String.valueOf(resultInt));
         }
         return new Operation();
     }
 
-    public void nextOperation (StoreData storeData, JTextComponent fieldName){
-        if (operationType != null) {
-            if (storeData.isTypeDouble()) {
-                setFirstNumber(String.valueOf(storeData.getResultDouble()));
-            } else {
-                setFirstNumber(String.valueOf(storeData.getResultInt()));
-            }
-        }
-        else {
-            setFirstNumber(fieldName.getText());
-        }
+    public void nextOperation (JTextComponent textField, JTextComponent textPane, StoreData storeData){
+        tempTrue = true;
+        textPane.setText(storeData.getResultStore());
+        textPane.setText(textPane.getText() + "\n");
+        textPane.setText(textPane.getText() + textField.getText());
     }
 
     @Override
