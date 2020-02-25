@@ -29,12 +29,10 @@ public class MainFrame extends JFrame{
     private JTextField textField;
     private JTextPane textPane;
 
-    VarType varType;
     StoreData storeData = new StoreData();
     Operation operation = new Operation();
     SimpleAttributeSet simpleAttributeSet = new SimpleAttributeSet();
     Font textFieldFont = new Font(null,Font.BOLD,25);
-
 
     public MainFrame() {
         setVisible(true);
@@ -47,6 +45,7 @@ public class MainFrame extends JFrame{
         textPane.setParagraphAttributes(simpleAttributeSet,true);
 
         textField.setFont(textFieldFont);
+//        button_1.setFont(textFieldFont);
 
         button_1.addActionListener(new ActionListener() {
             @Override
@@ -138,7 +137,7 @@ public class MainFrame extends JFrame{
                 operation.nextOperation(textField, textPane, storeData);
                 operation.printNumbersOrOperation(textPane, button_plus);
                 operation.setFirstNumber(textField.getText());
-                operation.operationType = "+";
+                operation.operationType = '+';
                 textField.setText("");
             }
         });
@@ -149,7 +148,7 @@ public class MainFrame extends JFrame{
                 operation.nextOperation(textField, textPane, storeData);
                 operation.printNumbersOrOperation(textPane, button_minus);
                 operation.setFirstNumber(textField.getText());
-                operation.operationType = "-";
+                operation.operationType = '-';
                 textField.setText("");
             }
         });
@@ -159,7 +158,7 @@ public class MainFrame extends JFrame{
                 operation.nextOperation(textField, textPane, storeData);
                 operation.printNumbersOrOperation(textPane, button_multi);
                 operation.setFirstNumber(textField.getText());
-                operation.operationType = "*";
+                operation.operationType = '*';
                 textField.setText("");
             }
         });
@@ -169,7 +168,7 @@ public class MainFrame extends JFrame{
                 operation.nextOperation(textField, textPane, storeData);
                 operation.printNumbersOrOperation(textPane, button_div);
                 operation.setFirstNumber(textField.getText());
-                operation.operationType = "/";
+                operation.operationType = '/';
                 textField.setText("");
             }
         });
@@ -184,10 +183,8 @@ public class MainFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 operation.setSecondNumber(textField.getText());
-                varType = operation.doOperation();
+                operation.doOperation();
                 operation = operation.getResult(textPane, textField, storeData);
-//                textField.setText("");
-//                operation.nextOperation(storeData);
             }
         });
     }

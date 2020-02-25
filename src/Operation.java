@@ -5,12 +5,10 @@ public class Operation{
 
     private String firstNumber;
     private String secondNumber;
-    String operationType;
-    private int resultInt;
-    private double resultDouble;
-    private boolean typeDouble;
+    char operationType;
+    private Number result;
     private boolean tempTrue;
-//    private boolean typeInteger;
+    private final double EPS = 0.00001;
 
     public String getFirstNumber() {
         return firstNumber;
@@ -39,53 +37,39 @@ public class Operation{
         fieldName.setText(fieldName.getText() + buttonValue.getActionCommand());
     }
 
-    public VarType doOperation (){
-        VarType varType = new VarType();
-        varType.IsDouble(getFirstNumber());
-        varType.IsDouble(getSecondNumber());
-        if (varType.isDouble()) {
-            switch (operationType){
-                case "+": resultDouble = Double.parseDouble(getFirstNumber()) + Double.parseDouble(getSecondNumber()); break;
-                case "-": resultDouble = Double.parseDouble(getFirstNumber()) - Double.parseDouble(getSecondNumber()); break;
-                case "/": resultDouble = Double.parseDouble(getFirstNumber()) / Double.parseDouble(getSecondNumber()); break;
-                case "*": resultDouble = Double.parseDouble(getFirstNumber()) * Double.parseDouble(getSecondNumber()); break;
-            }
-            typeDouble = true;
+    public void doOperation (){
+        double firstValue = Double.parseDouble(getFirstNumber());
+        double secondValue = Double.parseDouble(getSecondNumber());
 
+        switch (operationType) {
+            case '+':
+                result = firstValue + secondValue;
+                break;
+            case '-':
+                result = firstValue - secondValue;
+                break;
+            case '/':
+                result = firstValue / secondValue;
+                break;
+            case '*':
+                result = firstValue * secondValue;
+                break;
         }
-        else {
-            switch (operationType){
-                case "+": resultInt = Integer.parseInt(getFirstNumber()) + Integer.parseInt(getSecondNumber()); break;
-                case "-": resultInt = Integer.parseInt(getFirstNumber()) - Integer.parseInt(getSecondNumber()); break;
-                case "/": {
-                    if (Integer.parseInt(getFirstNumber()) % Integer.parseInt(getSecondNumber()) == 0) {
-                        resultInt = Integer.parseInt(getFirstNumber()) / Integer.parseInt(getSecondNumber());
-                    } else {
-                       resultDouble = (double) Integer.parseInt(getFirstNumber()) / Integer.parseInt(getSecondNumber());
-                       typeDouble = true;
-                    }
-                } break;
-                case "*": resultInt = Integer.parseInt(getFirstNumber()) * Integer.parseInt(getSecondNumber()); break;
-            }
-//            typeInteger = true;
+    }
+    private Number determineTypeOfResult() {
+        if (Math.abs(result.doubleValue()) - Math.floor(Math.abs(result.doubleValue())) < Math.ulp(result.doubleValue())) {
+            return result.longValue();
+        } else {
+            return result.doubleValue();
         }
-        return varType;
     }
 
     public Operation getResult (JTextComponent textPane, JTextComponent textField, StoreData storeData){
         storeData.setResultStore(this.toString());
         textPane.setText(storeData.getResultStore());
         textPane.setText(textPane.getText() + "\n");
+        textField.setText(String.valueOf(determineTypeOfResult()));
 
-        if (typeDouble) {
-            storeData.setResultDouble(resultDouble);
-            storeData.setTypeDouble(true);
-            textField.setText(String.valueOf(resultDouble));
-        } else {
-            storeData.setResultInt(resultInt);
-            storeData.setTypeDouble(false);
-            textField.setText(String.valueOf(resultInt));
-        }
         return new Operation();
     }
 
@@ -98,10 +82,6 @@ public class Operation{
 
     @Override
     public String toString() {
-        if (typeDouble) {
-            return firstNumber + " " + operationType + " " + secondNumber + " = " + resultDouble;
-        } else {
-            return firstNumber + " " + operationType + " " + secondNumber + " = " + resultInt;
-        }
+        return firstNumber + " " + operationType + " " + secondNumber + " = " + determineTypeOfResult();
     }
 }
