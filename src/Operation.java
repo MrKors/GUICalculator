@@ -1,5 +1,9 @@
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
+/**
+ * The class {@code Operation} is used to implement the logic of the calculator.
+ * @author MrKors
+ */
 
 public class Operation{
 
@@ -8,12 +12,18 @@ public class Operation{
     char operationType;
     private Number result;
     private boolean tempTrue;
-    private final double EPS = 0.00001;
+    /** EPSILON - result calculation accuracy */
+    private final double EPSILON = 0.000001;
+
 
     public String getFirstNumber() {
         return firstNumber;
     }
 
+    /**
+     * Method setter, assign argument to field {@code firstNumber}? if this field equals {@code null}
+     * @param firstNumber
+     */
     public void setFirstNumber(String firstNumber) {
         if (this.firstNumber == null) {
             this.firstNumber = firstNumber;
@@ -28,7 +38,11 @@ public class Operation{
         this.secondNumber = secondNumber;
     }
 
-
+    /**
+     * Method for printing button names
+     * @param fieldName - field for printing
+     * @param buttonValue - button name
+     */
     public void printNumbersOrOperation(JTextComponent fieldName, JButton buttonValue){
         if (!tempTrue) {
             fieldName.setText("");
@@ -37,6 +51,9 @@ public class Operation{
         fieldName.setText(fieldName.getText() + buttonValue.getActionCommand());
     }
 
+    /**
+     *
+     */
     public void doOperation (){
         double firstValue = Double.parseDouble(getFirstNumber());
         double secondValue = Double.parseDouble(getSecondNumber());
@@ -56,14 +73,26 @@ public class Operation{
                 break;
         }
     }
+
+    /**
+     * Method for determining the type of result
+     * @return {@link Number}
+     */
     private Number determineTypeOfResult() {
-        if (Math.abs(result.doubleValue()) - Math.floor(Math.abs(result.doubleValue())) < Math.ulp(result.doubleValue())) {
+        if (Math.abs(result.doubleValue()) - Math.floor(Math.abs(result.doubleValue())) < EPSILON) {
             return result.longValue();
         } else {
             return result.doubleValue();
         }
     }
 
+    /**
+     * Method for getting result in fields
+     * @param textPane
+     * @param textField
+     * @param storeData
+     * @return {@link Operation}
+     */
     public Operation getResult (JTextComponent textPane, JTextComponent textField, StoreData storeData){
         storeData.setResultStore(this.toString());
         textPane.setText(storeData.getResultStore());

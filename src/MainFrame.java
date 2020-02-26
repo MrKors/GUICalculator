@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Class for painting main frame
+ * @author MrKors
+ */
 public class MainFrame extends JFrame{
 
     private JPanel panel1;
@@ -33,6 +37,7 @@ public class MainFrame extends JFrame{
     SimpleAttributeSet simpleAttributeSet = new SimpleAttributeSet();
     Font textFieldFont = new Font(null,Font.BOLD,25);
 
+    /** Constructor */
     public MainFrame() {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

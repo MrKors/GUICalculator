@@ -1,3 +1,7 @@
+/**
+ * This class is used for storing results
+ * @author MrKors
+ */
 public class StoreData {
     private String resultStore;
 
