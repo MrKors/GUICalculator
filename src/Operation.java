@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
+import java.util.Objects;
+
 /**
  * The class {@code Operation} is used to implement the logic of the calculator.
  * @author MrKors
@@ -40,12 +42,14 @@ public class Operation{
 
     /**
      * Method for printing button names
-     * @param fieldName - field for printing
+     * @param fieldName - field for printing input
+     * @param fieldName1 - field for printing output
      * @param buttonValue - button name
      */
-    public void printNumbersOrOperation(JTextComponent fieldName, JButton buttonValue){
+    public void printNumbersOrOperation(JTextComponent fieldName, JTextComponent fieldName1, JButton buttonValue){
         if (!tempTrue) {
             fieldName.setText("");
+            fieldName1.setText("");
             tempTrue = true;
         }
         fieldName.setText(fieldName.getText() + buttonValue.getActionCommand());
@@ -89,24 +93,26 @@ public class Operation{
     /**
      * Method for getting result in fields
      * @param textPane
-     * @param textField
+     * @param inputTextField
+     * @param outputTextField
      * @param storeData
      * @return {@link Operation}
      */
-    public Operation getResult (JTextComponent textPane, JTextComponent textField, StoreData storeData){
-        storeData.setResultStore(this.toString());
-        textPane.setText(storeData.getResultStore());
-        textPane.setText(textPane.getText() + "\n");
-        textField.setText(String.valueOf(determineTypeOfResult()));
+    public Operation getResult (JTextComponent textPane, JTextComponent inputTextField,JTextComponent outputTextField, StoreData storeData){
+        storeData.setCountOperations();
+        storeData.storeOperationsMap.put("Operation-" + storeData.getCountOperations(), this.toString());
+        outputTextField.setText(storeData.storeOperationsMap.get("Operation-" + storeData.getCountOperations()));
+
+        storeData.printMap(textPane, storeData.storeOperationsMap);
+        inputTextField.setText(String.valueOf(determineTypeOfResult()));
+
 
         return new Operation();
     }
 
-    public void nextOperation (JTextComponent textField, JTextComponent textPane, StoreData storeData){
+    public void nextOperation (JTextComponent inputTextField, JTextComponent outputTextFiled, StoreData storeData){
         tempTrue = true;
-        textPane.setText(storeData.getResultStore());
-        textPane.setText(textPane.getText() + "\n");
-        textPane.setText(textPane.getText() + textField.getText());
+        outputTextFiled.setText(inputTextField.getText());
     }
 
     @Override
