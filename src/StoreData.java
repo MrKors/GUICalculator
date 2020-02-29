@@ -1,19 +1,28 @@
+import javax.swing.text.JTextComponent;
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * This class is used for storing results
  * @author MrKors
  */
 public class StoreData {
-    private String resultStore;
+    private int countOperations = 0;
+    Map<String, String> storeOperationsMap = new TreeMap<>();
 
-    public String getResultStore() {
-        return resultStore;
+    public int getCountOperations() {
+        return countOperations;
     }
 
-    public void setResultStore(String resultStore) {
-        if (this.resultStore != null) {
-            this.resultStore += "\n" + resultStore;
-        } else {
-            this.resultStore = resultStore;
+    public void setCountOperations() {
+        this.countOperations++;
+    }
+
+    public void printMap(JTextComponent textComponent, Map<String, String> map) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry<String, String> values : map.entrySet()) {
+            stringBuilder.append(values.getValue() + "\n");
         }
+        textComponent.setText(stringBuilder.toString());
     }
 }
